@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="welcome">
+        <div class="banner">
+            <h3>DFG Fish Harvest Report</h3> 
+            <h2>Harvest Reports for {{user.first_name}} {{user.last_name}}!</h2> <!--User.get_by_id used here-->
+            <div class="links">
+                <a href="/new/report" class="link">New Report</a>
+                <a href="/logout" class="link">Logout</a>
+            </div>
+        </div> 
+        <div class="dashboardBody"> 
+            <div class="linksLeft"> 
+                <div class="fishBasics"> 
+                    <p>Fishing Basics</p>
+                    <div class="fishBacisTop">
+                        <a href="https://www.takemefishing.org/how-to-fish/fishing-gear-and-tackle/" target="_blank" onclick="alert('Redirecting to another site')">Tackle/Gear</a>
+                        <a href="https://www.takemefishing.org/how-to-fish/when-to-fish/best-times-to-fish/" target="_blank" onclick="alert('Redirecting to another site')">Best Times</a>
+                    </div>
+                    <div class="fishBasicsBottom">
+                        <a href="https://www.takemefishing.org/how-to-fish/fishing-knots-and-rigs/easy-fishing-knots/" target="_blank" onclick="alert('Redirecting to another site')">Basic Knots</a>
+                        <a href="https://www.takemefishing.org/how-to-fish/how-to-catch-fish/" target="_blank" onclick="alert('Redirecting to another site')">How-To</a>
+                    </div>
+                </div>
+                <div class="fishSafety">
+                    <p>Fishing Safety</p>
+                    <div class="fishSafetyTop">
+                        <a href="https://www.takemefishing.org/how-to-fish/fishing-safety/fishing-safety-tips/" target="_blank" onclick="alert('Redirecting to another site')">General Safety</a>
+                    </div>
+                    <div class="fishSafetyBottom">
+                        <a href="https://www.takemefishing.org/how-to-fish/fishing-safety/fishing-with-kids/" target="_blank" onclick="alert('Redirecting to another site')">Fishing With Kids</a>
+                    </div>
+                </div>
+                <div class="fishRecipes">
+                    <p>Fish Recipes</p>
+                    <div class="fishRecipesTop">
+                        <a href="https://www.fieldandstream.com/articles/fishing/2013/02/20-best-field-stream-fish-recipes/" target="_blank" onclick="alert('Redirecting to another site')">Freshwater Recipes</a>
+                    </div>
+                    <div class="fishRecipesBottom">
+                        <a href="https://www.realgoodfish.com/recipes/filter/8:18" target="_blank" onclick="alert('Redirecting to another site')">Saltwater Recipes</a>
+                    </div>
+                </div>
+            </div>
+            <div class="infoBody">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fish Type</th>
+                            <th>Weight (oz)</th>
+                            <th>Length (in)</th>
+                            <th>Date Caught</th>
+                            <th>Location/Body of Water</th>
+                            <th>Bait Used</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="scroll">
+                        {% for this_report in reports %} <!--Report.get_all_with_user used here--> 
+                        <tr>{% if this_report.user_id == session.user_id %} <!--conditional rendering-dashboard only renders the user created reports and access to edit/delete only their reports-->
+                            <td>{{this_report.fish_type}}</td>
+                            <td>{{this_report.weight_ounces}}</td>
+                            <td>{{this_report.length_inches}}</td>
+                            <td>{{this_report.date_caught.strftime('%m-%d-%y')}}</td>
+                            <td>{{this_report.location}}</td>
+                            <td>{{this_report.bait_used}}</td> <!--report.get_all_with_user produced this-->
+                            <td>
+                                <a href="/edit/report/{{this_report.id}}">Edit</a>| <!--specifies the reports being chosen are the one to change-->
+                                <a href="/destroy/report/{{this_report.id}}">Delete</a>
+                            </td>
+                            {% endif %}
+                        {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="linksRight"> 
+                <div class="CAFishId"> 
+                    <p>CA Fish Identification</p>
+                    <div class="CAFishIdTop">
+                        <a href="https://wildlife.ca.gov/Fishing/Inland" target="_blank" onclick="alert('Redirecting to another site')">Freshwater Species</a>
+                    </div>
+                    <div class="CAFishIdBottom">
+                        <a href="https://wildlife.ca.gov/Fishing/Ocean"  target="_blank" onclick="alert('Redirecting to another site')">Saltwater Species</a>
+                    </div>
+                </div>
+                <div class="AllReports">
+                    <p>All Harvest Reports</p>
+                    <div class="AllReportsLink">
+                        <a href="show/report/{{user.id}}">All Reports</a>
+                    </div>
+                </div>
+                <div class="fishConservation">
+                    <p>Conservation Effort</p>
+                    <div class="fishConservationTop">
+                        <a href="https://www.takemefishing.org/blog/january-2018/learn-about-fishing-conservation-policy-and-fish-c/" target="_blank" onclick="alert('Redirecting to another site')">Why It's Important</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

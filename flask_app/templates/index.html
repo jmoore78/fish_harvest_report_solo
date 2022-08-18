@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+    <title>Login</title>
+</head>
+<body>
+    <h3>DFG Fish Harvest Report</h3>
+    <div class="flexrow">
+        <div class="formcontrol">
+            <h2 id="reg">Register</h2>
+        {% with messages = get_flashed_messages(category_filter=['register']) %}
+            {% if messages %}
+            <div class="error">
+                <h3>Uh Oh!</h3>
+                    {% for message in messages %}
+                    <p>{{message}}</p>
+                    {% endfor %}
+            </div>
+            {% endif %}
+        {% endwith %}
+            <form action="/register" method="post" class="frm">
+                <label for="first_name">First Name:</label>
+                <input type="text" name="first_name">
+                <label for="last_name">Last Name:</label>
+                <input type="text" name="last_name">
+                <label for="email">Email:</label>
+                <input type="text" name="email">
+                <label for="password">Password:</label>
+                <input type="password" name="password">
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" name="confirm_password">
+                <button type="submit" id="regbtn">Register</button>
+            </form>
+        </div>
+        {% with messages = get_flashed_messages(category_filter=['logout']) %}
+            {% if messages %}
+        <div id="logoutMessage">
+            <h3>Good Bye!</h3>
+                {% for message in messages %}
+                <p>{{message}}</p>
+                {% endfor %}
+        </div>
+            {% endif %}
+        {% endwith %}
+        <div class="formcontrol">
+            <h2 id="log">Log In</h2>
+            {% with messages = get_flashed_messages(category_filter=['login']) %}
+                {% if messages %}
+                <div class="error">
+                    <h3>UH OH!</h3>
+                        {% for message in messages %}
+                        <p>{{message}}</p>
+                        {% endfor %}
+                </div>
+                {% endif %}
+            {% endwith %}
+            <form action="/login" method="post" class="frm">
+                <label for="email">Email:</label>
+                <input type="text" name="email">
+                <label for="password">Password:</label>
+                <input type="password" name="password">
+                <button type="submit" id="logbtn">Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

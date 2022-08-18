@@ -1,0 +1,276 @@
+* {
+    padding: 0;
+    margin: 0 auto;
+}
+
+.flexrow {
+    display: flex;
+    flex-direction: row;
+}
+
+body {
+    background-size: cover;
+    background-image: url('dadson.jpg');
+    /* background-size: default is auto for responsiveness */
+}
+
+@media only screen and (max-width: 600px) { /* set for responsiveness */
+/* tablets or cell */
+    body {
+        background-color: lightblue;
+    }
+}
+
+body > h3 {
+    margin: 10px;
+    color: white;
+}
+
+.welcome {
+    margin-top: 25px;
+    padding: 20px;
+    width: auto; /* set for responsiveness */
+    height: auto;
+    border-radius: 5px;
+}
+
+.banner {
+    height: 100px;
+    border-top: 5px solid blue;;
+    border-bottom: 5px solid blue;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner > h2, .banner > h3 {
+    color: white;
+    text-shadow: 1px 1px black
+}
+
+.links > a {
+    font-size: 150%; /* set for responsiveness */
+    color: blue;
+    text-shadow: 1px 1px black
+
+}
+
+.links {
+    margin: 0;
+    text-align: center;
+    width: 207px;
+}
+
+.dashboardBody {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    overflow-x: hidden;
+    overflow-y: auto; /* set for responsiveness */
+}
+
+.linksLeft, .linksRight {
+    margin: 20px 10px;
+}
+
+.fishBasics, .fishSafety, .fishRecipes, .CAFishId, .AllReports, .fishConservation {
+    margin-bottom: 100px;
+    padding: 5px 0px;
+    color: forestgreen;
+    text-shadow: 1px 1px black;
+    width: 200px;
+    height: 65px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.fishBasics > p, .fishSafety > p, .fishRecipes > p, .CAFishId > p, .AllReports > p, .fishConservation > p {
+    font-size: 130%; /* set for responsiveness */
+    font-weight: bold;
+    text-align: center;
+    margin: 2px 0px;
+}
+
+.AllReportsLink, .fishConservationTop {
+    margin-bottom: 10px;
+}
+
+.formcontrol {
+    padding: 30px;
+    margin-top: 50px;
+    width: 350px;
+    background-color: #201f1f88;
+    border-radius: 5px;
+}
+
+.formcontrol > h2 {
+    margin-bottom: 10px;
+}
+
+.frm {
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+.infoBody {
+    padding: 0px 10px;
+    width: 100%; /* set for responsiveness */
+    text-align: center;
+}
+
+.infoBody > p {
+    font-size: 120%; /* set for responsiveness */
+}
+
+.infobody > table, th, td {
+    border: 1px solid black;
+}
+
+.error {
+    text-indent: 5px;
+    font-weight: bold;
+    background-color: red;
+    border-radius: 5px;
+}
+.error > strong {
+    text-align: center;
+}
+
+.reportFormMessage {
+    color: rgb(39, 158, 39);
+}
+.reportFormBtn, #weatherDisplay > button {
+    background-color: rgb(39, 158, 39);
+}
+
+#apis {
+    color: forestgreen;
+    text-shadow: 1px 1px black;
+    font-size: 130%; /* set for responsiveness */
+}
+
+div#logoutMessage {
+    height: 100px;
+    width:150px;
+    text-align: center;
+    margin: auto;
+    text-indent: 5px;
+    font-size: 120%;
+    font-weight: bold;
+    background-color: rgba(255, 255, 0, 0.993);
+    border-radius: 5px;
+}
+
+#scroll {
+    overflow-y: scroll; /* set for responsiveness */
+}
+
+#log {
+    color: rgb(39, 158, 39);
+}
+
+#logbtn {
+    background-color: rgb(39, 158, 39);
+}
+
+#index > h3 {
+    margin: 10px;
+}
+
+#read-more {
+    font-size: 100%; /* set for responsiveness */
+    color: blue;
+    text-decoration: underline;
+}
+
+#reg {
+    color: darkorange;
+}
+
+#regbtn {
+    background-color: darkorange;
+}
+
+#weatherBox {
+    display: flex;
+    flex-direction: row;
+}
+
+#weatherDisplay {
+    color: forestgreen;
+    text-shadow: 1px 1px black;
+    width: 250px;
+    height: 65px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#weatherDisplay > button {
+    margin: 0;
+}
+
+#weatherDisplay > input {
+    height: auto;
+    padding: 2px;
+}
+
+table {
+    margin-top: 50px;
+    width: 100%; /* set for responsiveness */
+    color: white;
+    background-color: none;
+}
+
+th {
+    font-size: 130%; /* set for responsiveness */
+}
+
+th, td {
+    font-weight: bold;
+    height: 30px;
+    border-radius: 5px;
+    background-color: rgba(34, 139, 34, 0.596);
+}
+
+h2 {
+    font-size: 200%; /* set for responsiveness */
+}
+
+h3 {
+    margin: 0px;
+}
+
+input[type=text], input[type=password]{
+    height: 30px;
+}
+
+input[type=text], input[type=password], textarea {
+    margin-bottom: 15px;
+    width: 100%; /* set for responsiveness */
+    border-radius: 4px;
+}
+
+.frm > p, label, input[type=radio], input[type=date] {
+    margin-left: 0px;
+}
+
+button {
+    padding: 4px;
+    margin-left: 0px;
+    height: 25px;
+    font-weight: bold;
+    color: white;
+    border-radius: 3px;
+    border: none;
+}
+
+a {
+    font-size: 120%;
+    margin-right: 5px;
+    color: white;
+}

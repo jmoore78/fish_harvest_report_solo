@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Edit Report</title>
+</head>
+<body>
+    <div class="welcome">
+        <div class="banner">
+            <h3>DFG Fish Harvest Report</h3>
+            <h2>Edit Your Catch {{user.first_name}}!</h2>
+            <div class="links">
+                <a href="/dashboard"  class="link">Dashboard</a>
+                <a href="/logout"  class="link">Logout</a>
+            </div>
+        </div>
+        <div class="formcontrol">
+            <h2 class="reportFormMessage">Edit Your Report</h2>
+            <form action="/update/report" method="post" class="frm">
+                <input type="hidden" name="id" value={{edit.id}}> <!--hidden allows us to identify that it is the specific report we want to edit by name="id"-->
+                <label for="fish_type">Fish Type:</label>
+                <input type="text" name="fish_type" value={{edit.fish_type}}>
+                <label for="weight_ounces">Weight in Ounces:</label>
+                <input type="text" name="weight_ounces" value={{edit.weight_ounces}}>
+                <label for="length_inches">Length in Inches:</label>
+                <input type="text" name="length_inches" value={{edit.length_inches}}>
+                <label for="date_caught">Date Caught:</label>
+                <input type="date" name="date_caught" value="{{edit.date_caught.strftime('%Y-%m-%d')}}">
+                <label for="location">Location:</label>
+                <textarea id="location" name="location" rows="4" cols="50">{{edit.location}}</textarea>
+                <label for="bait_used">Bait Used:</label>
+                <textarea id="bait_used" name="bait_used" rows="4" cols="50">{{edit.bait_used}}</textarea>
+                <button type="submit" class="reportFormBtn">Update</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

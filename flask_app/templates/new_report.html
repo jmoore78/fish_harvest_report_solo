@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--set for responsiveness-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>New Report</title>
+</head>
+<body>
+    <div class="welcome">
+        <div class="banner">
+            <h3>DFG Fish Harvest Report</h3>
+            <h2>Report Your Catch {{user.first_name}}!</h2>
+            <div class="links">
+                <a href="/dashboard" class="link">Dashboard</a>
+                <a href="/logout" class="link">Logout</a>
+            </div>
+        </div>
+        <div class="formcontrol">
+            <h2 class="reportFormMessage">New Report</h2>
+            {% with messages = get_flashed_messages(category_filter=['report']) %}
+            {% if messages %}
+            <div class="error">
+                <h3>Uh Oh!</h3>
+                    {% for message in messages %}
+                    <p>{{message}}</p>
+                    {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+            <form action="/create/report" method="post" class="frm">
+                <label for="fish_type">Fish Type:</label>
+                <input type="text" name="fish_type" id="fish_type">
+                <label for="weight_ounces">Weight in Ounces:</label>
+                <input type="text" name="weight_ounces" id="weight_ounces">
+                <label for="length_inches">Length in Inches:</label>
+                <input type="text" name="length_inches" id="length_inches">
+                <label for="date_caught">Date Caught:</label>
+                <input type="date" name="date_caught" id="date_caught">
+                <label for="location">Location/Body of Water:</label>
+                <textarea id="location" name="location" rows="4" cols="50"></textarea>
+                <label for="bait_used">Bait Used:</label>
+                <textarea id="bait_used" name="bait_used" rows="4" cols="50"></textarea>
+                <button type="submit" class="reportFormBtn">Add</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
