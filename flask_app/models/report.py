@@ -1,7 +1,7 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
 from datetime import datetime
-from flask_app.models import user
+from flask_app.models.user import User
 
 
 
@@ -20,7 +20,7 @@ class Report:
         self.user_id = data['user_id'] # using the foreign key in the reports table. this will be used to check for user access to edit/delete the reports only the specified user created.
         self.user = None
 
-#--------class methods to interface with the database--------
+#--------class methods to interface with the database (web APIs)--------
     @classmethod
     def save(cls,data): # method is called in the new report route to save the new report
         query ="INSERT INTO reports ( fish_type , weight_ounces , length_inches , date_caught , location , bait_used , user_id ) VALUES ( %(fish_type)s , %(weight_ounces)s , %(length_inches)s , %(date_caught)s , %(location)s , %(bait_used)s , %(user_id)s );"
@@ -37,7 +37,6 @@ class Report:
             all_reports.append( cls(row))
         return all_reports
 
-################################################################################################################################
     @classmethod
     def get_all_with_user(cls): # used in the show route. renders all reports and stored as a dictionary for Jinja to loop through 
         query = "SELECT * from reports JOIN users on reports.user_id = users.id;"
@@ -46,26 +45,14 @@ class Report:
         reports = [] # be sure to do a Jinja loop in html for when this is called
         for report in results:
             this_report = cls(report) # instantiate (reference) reports object (need a place to store the object info that is returned in the query)
-            this_user = user.User.get_by_id({"id": report["users.id"]}) # instantiate (reference) user object (need a place to store the object info that is returned in the query)
+            this_user = User.get_by_id({"id": report["users.id"]}) # instantiate (reference) user object (need a place to store the object info that is returned in the query)
             this_report.user = this_user # combining this_user to report with dot notation and variable value assignment
             reports.append(this_report) #appending (adding) the combined info into the reports list to be looped with Jinja in HTML.
         return reports
 
-#         elif(this_report.date_caught > datetime.date(datetime.now())):
-#            flash("check upcoming schedule", "show")
-
-    @classmethod
-    def get_one_with_user(cls,data): # not used
-        query = "SELECT * from reports JOIN users ON reports.user_id = users.id WHERE reports.id = %(id)s;" # specific query with a single result, no need for a loop.
-        result = connectToMySQL(cls.db_name).query_db(query,data)
-        print(f"RESULTS: {result}")
-        return result[0] # the result became a reports-driven query, so the "reported by" on the show page is "report.first_name".
-
-####################################################################################################################################
-
     @classmethod
     def get_report_by_id(cls,data): # cls because its a class method, data because we need something to search by due to the conditional query. 
-        query = "SELECT * FROM reports WHERE id = %(id)s;" # specific, doesn't need a loop to get Jinja to display the name
+        query = "SELECT * FROM reports WHERE id = %(id)s;" 
         result = connectToMySQL(cls.db_name).query_db(query,data)
         return cls(result[0]) # used to parce the info from this customized query
 
@@ -79,10 +66,8 @@ class Report:
         query = "DELETE FROM reports WHERE id = %(id)s;"
         return connectToMySQL(cls.db_name).query_db(query,data)
 
-
-
 #--------static methods--------
-    @staticmethod # validation method to check for duplicates AND check for pattern errors (also uses if checks). also uses booleans to generates the error message informing the user of the problem
+    @staticmethod # validation method to check for duplicates AND check for pattern errors. uses booleans to generate the error message informing the user of the issue
     def validate_report(report):
         is_valid = True
         if len(report['fish_type']) < 3: # If checks to see if it is empty
@@ -104,3 +89,14 @@ class Report:
             is_valid = False
             flash("Bait Used cannot be empty","report")
         return is_valid
+
+# Class method vs Static Method
+# The difference between the Class method and the static method is:
+
+# A class method takes cls as the first parameter while a static method needs no specific parameters.
+# A class method can access or modify the class state while a static method can’t access or modify it.
+# In general, static methods know nothing about the class state. They are utility-type methods that take some parameters and work upon those parameters. On the other hand class methods must have class as a parameter.
+# We use @classmethod decorator in python to create a class method and we use @staticmethod decorator to create a static method in python.
+# When to use the class or static method?
+# We generally use the class method to create factory methods. Factory methods return class objects ( similar to a constructor ) for different use cases.
+# We generally use static methods to create utility functions.

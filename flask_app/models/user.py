@@ -2,7 +2,6 @@ from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
 import re
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
-from flask_app.models.report import Report
 
 class User:
     db_name = "dfg_harvest_report"
@@ -15,11 +14,9 @@ class User:
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
 
-#--------CONSIDER USING .count() METHOD TO CHECK DB FOR DUPLICATES--------
-
-#--------class methods to interface with the database--------
+#--------class methods to interface with the database (Web APIs)--------
     @classmethod
-    def save(cls,data): # method is called in the registration route to save the new user
+    def save(cls,data): # method is called in the registration route to save the new user. row ID is returned and used as the user ID
         query ="INSERT INTO users ( first_name , last_name , email , password ) VALUES ( %(first_name)s , %(last_name)s , %(email)s , %(password)s );"
         results = connectToMySQL(cls.db_name).query_db(query,data)
         print(results)
@@ -55,7 +52,7 @@ class User:
 #----registeration validation----
     @staticmethod # validation method to check for duplicates AND check for pattern errors (also uses if checks). also uses booleans to generates the error message informing the user of the problem
     def validate_registration(user):
-        is_valid = True
+        is_valid = True # setting the boolean value to True as a default value to check against.
         if len(user['first_name']) < 2: # Basic Form Validation
             is_valid = False
             flash("First Name must be at least 2 characters","register")
@@ -68,7 +65,7 @@ class User:
         if len(results) > 0:
             is_valid = False
             flash("Email Already Taken","register")
-        elif not EMAIL_REGEX.match(user['email']): # Pattern Validation-checks for specific patterns of the chosen value requirement. Email structure in this case.
+        elif not EMAIL_REGEX.match(user['email']): # Pattern Validation: checks for specific patterns of the chosen value requirement. Email structure in this case.
             is_valid = False
             flash("Invalid Email","register")
         if len(user['password']) < 8:

@@ -5,8 +5,6 @@ from flask_app.models.report import Report
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 
-#--------whenever we do a CRUD operation like create, we need two routes: one to render the form, another to INSERT into the db--------
-
 #----render form route
 @app.route('/')
 def home_page():
@@ -25,10 +23,11 @@ def register():
         "email": request.form['email'],
         "password": pw_hash
     }
-    user_id = User.save(data) # Call the save @classmethod on User
-    session['user_id'] = user_id # store user id into session. id comes from pymysql which will return the id of the newly created row (see  mysqlconnection.py file)
+    user_id = User.save(data) # Call the save User @classmethod on the object to create. data will be the object and the info is taken from the form.
+    session['user_id'] = user_id # store user id into session. id comes from pymysql which will return the id of the newly created row (save method from user.py)
     return redirect('/dashboard')
 
+#----authentication
 @app.route('/login', methods=['POST']) # login validation
 def login():
     data = { "email" : request.form['email'] } # see if the email provided as a username exists in the database
