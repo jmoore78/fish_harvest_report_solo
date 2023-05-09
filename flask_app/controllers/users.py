@@ -55,5 +55,5 @@ def dashboard():
         return redirect('/logout')
     data = {
         "id": session['user_id']
-    }# user is singular because I am getting one (don't need loop to display). reports is plural from get_all so Jinja loop needed in HTML to pick it out.
+    }
     return render_template("dashboard.html", user=User.get_by_id(data), reports=Report.get_all_with_user())
