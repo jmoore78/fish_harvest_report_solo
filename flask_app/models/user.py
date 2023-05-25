@@ -14,7 +14,7 @@ class User:
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
 
-#--------class methods to interface with the database (Web APIs)--------
+#--------class methods to interface with the database --------
     @classmethod
     def save(cls,data): # method is called in the registration route to save the new user. row ID is returned and used as the user ID
         query ="INSERT INTO users ( first_name , last_name , email , password ) VALUES ( %(first_name)s , %(last_name)s , %(email)s , %(password)s );"

@@ -20,7 +20,7 @@ class Report:
         self.user_id = data['user_id'] # using the foreign key in the reports table. this will be used to check for user access to edit/delete the reports only the specified user created.
         self.user = None
 
-#--------class methods to interface with the database (web APIs)--------
+#--------class methods to interface with the database --------
     @classmethod
     def save(cls,data): # method is called in the new report route to save the new report
         query ="INSERT INTO reports ( fish_type , weight_ounces , length_inches , date_caught , location , bait_used , user_id ) VALUES ( %(fish_type)s , %(weight_ounces)s , %(length_inches)s , %(date_caught)s , %(location)s , %(bait_used)s , %(user_id)s );"
